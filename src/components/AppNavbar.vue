@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar">
     <div class="navbar-brand">
-      <h1>🚀 Test Changelog Project</h1>
+        <h1>Test Changelog Project - v2</h1>
     </div>
     <div class="navbar-menu">
       <RouterLink to="/" class="navbar-item">Home</RouterLink>
