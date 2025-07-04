@@ -23,7 +23,7 @@
     </div>
     
     <div class="footer-bottom">
-      <p>&copy; 2025 Test Changelog Project. Made with ❤️ for changelog automation.</p>
+        <p>&copy; 2025 Test Changelog Project. Made with ❤️ for changelog automation and testing!</p>
     </div>
   </footer>
 </template>
