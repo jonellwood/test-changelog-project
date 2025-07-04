@@ -2,28 +2,29 @@
   <footer class="app-footer">
     <div class="footer-content">
       <div class="footer-section">
-        <h4>Test Changelog Project</h4>
-        <p>Demonstrating git-changelog-manager integration</p>
+        <h4>Jon Ellwood</h4>
+        <p>Full Stack Developer passionate about creating efficient, elegant solutions and sharing knowledge through open source.</p>
       </div>
       
       <div class="footer-section">
-        <h4>Links</h4>
+        <h4>Connect</h4>
         <ul>
-          <li><a href="https://github.com/jonathanellwood/git-changelog-manager" target="_blank">git-changelog-manager</a></li>
-          <li><a href="https://vuejs.org" target="_blank">Vue.js</a></li>
-          <li><a href="https://vitejs.dev" target="_blank">Vite</a></li>
+          <li><a href="https://github.com/jonellwood" target="_blank">GitHub</a></li>
+          <li><a href="https://www.npmjs.com/~jonellwood" target="_blank">npm</a></li>
+          <li><a href="https://www.linkedin.com/in/jon-ellwood-320199244/" target="_blank">LinkedIn</a></li>
+          <li><a href="mailto:jonellwood@gmail.com">Email</a></li>
         </ul>
       </div>
       
       <div class="footer-section">
-        <h4>Version</h4>
-        <p>v{{ version }}</p>
-        <p class="build-info">Built with Vue 3 & Vite</p>
+        <h4>Built With</h4>
+        <p>Vue 3, Vite & ❤️</p>
+        <p class="build-info">Open source tools for modern development</p>
       </div>
     </div>
     
     <div class="footer-bottom">
-        <p>&copy; 2025 Test Changelog Project. Made with ❤️ for changelog automation and testing!</p>
+        <p>&copy; 2025 Jon Ellwood. Full Stack Developer. Made with ❤️ and Vue.js</p>
     </div>
   </footer>
 </template>

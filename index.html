@@ -1,13 +1,64 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
   <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vite App</title>
+    
+    <!-- Favicon - Safari Compatible -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Safari Specific -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Jon Ellwood">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="msapplication-TileColor" content="#667eea">
+    
+    <!-- Meta Information -->
+    <meta name="description" content="Jon Ellwood - Full Stack Developer & Open Source Enthusiast. Vue.js, Node.js, and modern web development.">
+    <meta name="author" content="Jon Ellwood">
+    <meta name="keywords" content="Jon Ellwood, Full Stack Developer, Vue.js, Node.js, Open Source, Web Development">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Jon Ellwood - Full Stack Developer">
+    <meta property="og:description" content="Full Stack Developer & Open Source Enthusiast. Creating efficient, elegant solutions with modern web technologies.">
+    <meta property="og:url" content="https://jonellwood.dev">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Jon Ellwood - Full Stack Developer">
+    <meta name="twitter:description" content="Full Stack Developer & Open Source Enthusiast. Creating efficient, elegant solutions with modern web technologies.">
+    
+    <title>Jon Ellwood - Full Stack Developer</title>
   </head>
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
+    
+    <!-- Force favicon refresh for Safari -->
+    <script>
+      // Safari sometimes needs a push to recognize new favicons
+      if (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
+        setTimeout(() => {
+          const link = document.querySelector('link[rel="shortcut icon"]') || document.createElement('link');
+          link.type = 'image/x-icon';
+          link.rel = 'shortcut icon';
+          link.href = '/favicon.ico?' + Date.now();
+          document.head.appendChild(link);
+        }, 100);
+      }
+    </script>
   </body>
 </html>

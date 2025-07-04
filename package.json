@@ -1,7 +1,8 @@
 {
-  "name": "test-changelog-project",
-  "version": "0.3.3",
+  "name": "jon-ellwood-personal-website",
+  "version": "1.0.0",
   "private": true,
+  "description": "Jon Ellwood's personal website built with Vue 3 and Vite",
   "type": "module",
   "scripts": {
     "dev": "vite",
