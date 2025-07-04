@@ -6,9 +6,15 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "changelog:add": "changelog-add",
+    "changelog:release": "changelog-release"
   },
-  "keywords": ["test", "changelog", "demo"],
+  "keywords": [
+    "test",
+    "changelog",
+    "demo"
+  ],
   "author": "Jonathan Ellwood",
   "license": "MIT"
 }
