@@ -1,6 +1,6 @@
 {
   "name": "test-changelog-project",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,7 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "changelog:add": "changelog-add",
+    "changelog:release": "changelog-release"
   },
   "dependencies": {
     "pinia": "^3.0.3",
@@ -21,6 +23,7 @@
     "@vue/eslint-config-prettier": "^10.2.0",
     "eslint": "^9.29.0",
     "eslint-plugin-vue": "~10.2.0",
+    "git-changelog-manager": "^1.0.3",
     "globals": "^16.2.0",
     "prettier": "3.5.3",
     "vite": "npm:rolldown-vite@latest",
