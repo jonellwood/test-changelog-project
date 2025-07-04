@@ -1,0 +1,14 @@
+{
+  "name": "test-changelog-project",
+  "version": "0.1.0",
+  "description": "A test project to demonstrate git-changelog-manager functionality",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["test", "changelog", "demo"],
+  "author": "Jonathan Ellwood",
+  "license": "MIT"
+}
