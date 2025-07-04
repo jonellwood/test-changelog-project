@@ -1,38 +1,35 @@
-# Test Changelog Project
+# temp-vue-project
 
-A simple Node.js web application created to test the **git-changelog-manager** package functionality.
+This template should help get you started developing with Vue 3 in Vite.
 
-## Features
+## Recommended IDE Setup
 
-- 🌐 Simple HTTP server with routing
-- 📊 API endpoints for version and status
-- 📝 Ready for changelog management testing
-- 🔄 Demonstrates version tracking workflow
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-## Installation
+## Customize configuration
 
-```bash
+See [Vite Configuration Reference](https://vite.dev/config/).
+
+## Project Setup
+
+```sh
 npm install
-npm start
 ```
 
-Visit http://localhost:3000 to see the application.
+### Compile and Hot-Reload for Development
 
-## API Endpoints
+```sh
+npm run dev
+```
 
-- `GET /` - Home page
-- `GET /api/version` - Returns current version info
-- `GET /api/status` - Returns server status
-- `GET /about` - About page
+### Compile and Minify for Production
 
-## Testing git-changelog-manager
+```sh
+npm run build
+```
 
-This project is set up to test various changelog scenarios:
+### Lint with [ESLint](https://eslint.org/)
 
-1. **Initial features** - Basic server setup
-2. **Feature additions** - New API endpoints
-3. **Bug fixes** - Error handling improvements
-4. **Documentation updates** - README changes
-5. **Version releases** - Semantic versioning
-
-Perfect for demonstrating automated changelog generation!
+```sh
+npm run lint
+```

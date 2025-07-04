@@ -1,20 +1,29 @@
 {
   "name": "test-changelog-project",
   "version": "0.2.0",
-  "description": "A test project to demonstrate git-changelog-manager functionality",
-  "main": "src/index.js",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "changelog:add": "changelog-add",
-    "changelog:release": "changelog-release"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --fix",
+    "format": "prettier --write src/"
   },
-  "keywords": [
-    "test",
-    "changelog",
-    "demo"
-  ],
-  "author": "Jonathan Ellwood",
-  "license": "MIT"
+  "dependencies": {
+    "pinia": "^3.0.3",
+    "vue": "^3.5.17",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.29.0",
+    "@vitejs/plugin-vue": "^6.0.0",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "eslint": "^9.29.0",
+    "eslint-plugin-vue": "~10.2.0",
+    "globals": "^16.2.0",
+    "prettier": "3.5.3",
+    "vite": "npm:rolldown-vite@latest",
+    "vite-plugin-vue-devtools": "^7.7.7"
+  }
 }
