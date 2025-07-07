@@ -12,10 +12,16 @@
       </div>
       <div class="status-indicator" aria-label="Online status">●</div>
     </div>
-    
-    <div class="messages-container" role="log" aria-live="polite" aria-label="Chat messages" ref="messagesContainer">
-      <div 
-        v-for="(message, index) in visibleMessages" 
+
+    <div
+      class="messages-container"
+      role="log"
+      aria-live="polite"
+      aria-label="Chat messages"
+      ref="messagesContainer"
+    >
+      <div
+        v-for="(message, index) in visibleMessages"
         :key="index"
         :class="['msg', message.sender]"
         role="article"
@@ -32,15 +38,15 @@
         <div class="message-time">{{ message.time }}</div>
       </div>
     </div>
-    
+
     <div class="input-area">
-      <input 
-        type="text" 
+      <input
+        type="text"
         placeholder="Ask me anything..."
         class="message-input"
         disabled
         aria-label="Type a message (currently disabled for demo)"
-      >
+      />
       <button class="send-button" aria-label="Send message (currently disabled for demo)">→</button>
     </div>
   </div>
@@ -55,38 +61,38 @@ const messages = ref([
     sender: 'device',
     text: 'Hi there! 👋',
     time: '10:30 AM',
-    isTyping: false
+    isTyping: false,
   },
   {
     sender: 'device',
-    text: 'I\'m Jon, a full-stack developer passionate about creating amazing web experiences.',
+    text: "I'm Jon, a full-stack developer passionate about learning new things that create amazing web experiences.",
     time: '10:30 AM',
-    isTyping: false
+    isTyping: false,
   },
   {
     sender: 'user',
     text: 'What technologies do you work with?',
     time: '10:31 AM',
-    isTyping: false
+    isTyping: false,
   },
   {
     sender: 'device',
-    text: 'I specialize in Vue.js, React, Node.js, Python, and modern web technologies. I love building scalable applications!',
+    text: "I ❤️ plain 'ol' HTML, CSS, and Javascript - but also use Vue.js, Sveltekit, PHP, and Python (and dabble in React). Anything that helps me create experiences that provide the best UX. I love the challenge of building scalable applications!",
     time: '10:31 AM',
-    isTyping: false
+    isTyping: false,
   },
   {
     sender: 'user',
     text: 'Can you show me your projects?',
     time: '10:32 AM',
-    isTyping: false
+    isTyping: false,
   },
   {
     sender: 'device',
-    text: 'Absolutely! Check out my GitHub or browse the projects section. I\'ve built everything from npm packages to full-stack applications.',
+    text: "Absolutely! Check out my GitHub or browse the projects section. I've built everything from npm packages to full-stack applications.",
     time: '10:32 AM',
-    isTyping: false
-  }
+    isTyping: false,
+  },
 ])
 
 const visibleMessages = ref([])
@@ -105,7 +111,7 @@ const scrollToBottom = async () => {
   if (messagesContainer.value) {
     messagesContainer.value.scrollTo({
       top: messagesContainer.value.scrollHeight,
-      behavior: prefersReducedMotion ? 'auto' : 'smooth'
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
     })
   }
 }
@@ -120,30 +126,30 @@ const animateMessages = async () => {
     if (messages.value[i].sender === 'device') {
       visibleMessages.value.push({
         ...messages.value[i],
-        isTyping: true
+        isTyping: true,
       })
-      
+
       // Scroll to show typing indicator
       await scrollToBottom()
-      
+
       // Wait for typing animation
-      await new Promise(resolve => setTimeout(resolve, typeDelay))
-      
+      await new Promise((resolve) => setTimeout(resolve, typeDelay))
+
       // Replace with actual message
       visibleMessages.value[visibleMessages.value.length - 1].isTyping = false
-      
+
       // Scroll to show the complete message
       await scrollToBottom()
     } else {
       // User messages appear immediately
       visibleMessages.value.push(messages.value[i])
-      
+
       // Scroll to show user message
       await scrollToBottom()
     }
-    
+
     // Wait before next message
-    await new Promise(resolve => setTimeout(resolve, revealDelay))
+    await new Promise((resolve) => setTimeout(resolve, revealDelay))
   }
 }
 </script>
@@ -159,7 +165,8 @@ const animateMessages = async () => {
   flex-direction: column;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   box-sizing: border-box;
   position: relative;
 }
@@ -255,6 +262,7 @@ const animateMessages = async () => {
   box-sizing: border-box;
   hyphens: auto;
   overflow-wrap: break-word;
+  text-align: left;
 }
 
 .msg.user .message-bubble {
@@ -291,9 +299,15 @@ const animateMessages = async () => {
   animation: typing 1.4s infinite;
 }
 
-.dot:nth-child(1) { animation-delay: 0s; }
-.dot:nth-child(2) { animation-delay: 0.2s; }
-.dot:nth-child(3) { animation-delay: 0.4s; }
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
 
 .input-area {
   background: #1c1c1e;
@@ -338,7 +352,9 @@ const animateMessages = async () => {
 }
 
 @keyframes typing {
-  0%, 60%, 100% {
+  0%,
+  60%,
+  100% {
     transform: translateY(0);
     opacity: 0.4;
   }
@@ -364,11 +380,11 @@ const animateMessages = async () => {
   .dot {
     animation: none;
   }
-  
+
   .msg {
     animation: none;
   }
-  
+
   .typing-indicator .dot {
     opacity: 0.7;
   }
@@ -384,7 +400,7 @@ const animateMessages = async () => {
     max-width: 100%;
     margin: 0;
   }
-  
+
   .message-bubble {
     font-size: 0.85rem;
     padding: 0.6rem 0.9rem;
@@ -392,20 +408,20 @@ const animateMessages = async () => {
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
-  
+
   .msg {
     max-width: 85%;
   }
-  
+
   .sms-header {
     padding: 0.75rem;
   }
-  
+
   .messages-container {
     padding: 0.75rem;
     overflow-x: hidden;
   }
-  
+
   .input-area {
     padding: 0.75rem;
   }
@@ -416,36 +432,36 @@ const animateMessages = async () => {
     height: 350px;
     border-radius: 12px;
   }
-  
+
   .message-bubble {
     font-size: 0.8rem;
     padding: 0.5rem 0.8rem;
   }
-  
+
   .msg {
     max-width: 90%;
   }
-  
+
   .sms-header {
     padding: 0.5rem;
   }
-  
+
   .contact-details h3 {
     font-size: 0.8rem;
   }
-  
+
   .contact-details p {
     font-size: 0.7rem;
   }
-  
+
   .messages-container {
     padding: 0.5rem;
   }
-  
+
   .input-area {
     padding: 0.5rem;
   }
-  
+
   .message-input {
     font-size: 0.8rem;
     padding: 0.6rem 0.8rem;
