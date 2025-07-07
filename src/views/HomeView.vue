@@ -5,13 +5,12 @@
       <div class="hero-content">
         <div class="hero-text">
           <h1 class="hero-title">
-            <span class="greeting">Hi, I'm</span>
-            <span class="name">Jon Ellwood</span>
+            <span class="greeting">{{ profile.personal.greeting }}</span>
+            <span class="name">{{ profile.personal.name }}</span>
           </h1>
-          <h2 class="hero-subtitle">Full Stack Developer & Open Source Enthusiast</h2>
+          <h2 class="hero-subtitle">{{ profile.personal.subtitle }}</h2>
           <p class="hero-description">
-            I create efficient, elegant solutions using modern web technologies. 
-            Passionate about Vue.js, Node.js, and building tools that make developers' lives easier.
+            {{ profile.personal.bio }}
           </p>
           <div class="hero-buttons">
             <RouterLink to="/projects" class="btn btn-primary">View Projects</RouterLink>
@@ -19,7 +18,8 @@
           </div>
         </div>
         <div class="hero-visual">
-          <div class="code-window">
+          <!-- Desktop Terminal - Only mounted when not mobile -->
+          <div v-if="!isMobile" class="code-window">
             <div class="window-header">
               <div class="window-buttons">
                 <span class="btn-close"></span>
@@ -29,17 +29,23 @@
               <span class="window-title">terminal.js</span>
             </div>
             <div class="code-content">
-              <pre><code><span class="code-comment">// Building the future, one commit at a time</span>
+              <pre><code><span class="code-comment">{{ profile.codeExample.comment }}</span>
 <span class="code-keyword">const</span> <span class="code-variable">developer</span> = {
-  <span class="code-property">name</span>: <span class="code-string">'Jon Ellwood'</span>,
-  <span class="code-property">skills</span>: [<span class="code-string">'Vue.js'</span>, <span class="code-string">'Node.js'</span>, <span class="code-string">'PHP'</span>],
-  <span class="code-property">passion</span>: <span class="code-string">'Open Source'</span>,
-  <span class="code-method">createAwesome</span>() {
-    <span class="code-keyword">return</span> <span class="code-string">'Let\'s build something!'</span>;
+  <span class="code-property">name</span>: <span class="code-string">'{{ profile.codeExample.object.name }}'</span>,
+  <span class="code-property">skills</span>: <span class="code-string">[{{ skillsText }}]</span>,
+  <span class="code-property">passion</span>: <span class="code-string">'{{ profile.codeExample.object.passion }}'</span>,
+  <span class="code-method">{{ profile.codeExample.object.method }}</span>() {
+    <span class="code-keyword">return</span> <span class="code-string">'{{ profile.codeExample.object.returnValue }}'</span>;
   }
 };</code></pre>
               <div class="typing-cursor"></div>
             </div>
+          </div>
+          
+          <!-- Mobile Components - Only mounted when mobile -->
+          <div v-if="isMobile" class="mobile-container">
+            <!-- Mobile experience with iOS/Android toggle -->
+            <MobileExperience />
           </div>
         </div>
       </div>
@@ -103,42 +109,30 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import GitHubContributions from '../components/GitHubContributions.vue'
+import MobileExperience from '../components/MobileExperience.vue'
+import { useViewportSwitcher } from '../composables/useViewportSwitcher.js'
 import { fetchGitHubUser } from '../utils/github.js'
+import profile, { getFeaturedProjects } from '../data/profile.js'
 
-const stats = ref({
-  repositories: '123',
-  packages: '3',
-  experience: '5+',
-  followers: '0'
+const stats = ref(profile.defaultStats)
+const featuredProjects = ref(getFeaturedProjects())
+
+// Initialize viewport switcher for responsive component mounting
+const { isMobile } = useViewportSwitcher(768)
+
+// Create formatted skills text for code example
+const skillsText = computed(() => {
+  return profile.codeExample.object.skills.map(skill => `'${skill}'`).join(', ')
 })
-
-const featuredProjects = ref([
-  {
-    name: 'git-changelog-manager',
-    description: 'Automated changelog generation with AI-powered commit message polishing and GitHub integration.',
-    emoji: '📋',
-    tech: ['Node.js', 'AI Integration', 'CLI'],
-    github: 'https://github.com/jonellwood/git-changelog-manager',
-    demo: 'https://www.npmjs.com/package/git-changelog-manager'
-  },
-  {
-    name: 'ftp-deploy-manager',
-    description: 'Smart FTP deployment tool with git integration, file filtering, and environment-based configuration.',
-    emoji: '🚀',
-    tech: ['PHP', 'FTP', 'Git'],
-    github: 'https://github.com/jonellwood/ftp-deploy-manager',
-    demo: null
-  }
-])
 
 // Load real stats from GitHub API
 onMounted(async () => {
   try {
     // Fetch real GitHub user data
-    const userData = await fetchGitHubUser('jonellwood')
+    const userData = await fetchGitHubUser(profile.github.username)
     stats.value.repositories = userData.public_repos
     stats.value.followers = userData.followers
     
@@ -159,9 +153,13 @@ onMounted(async () => {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   padding: 4rem 2rem;
-  min-height: 80vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .hero-content {
@@ -171,6 +169,8 @@ onMounted(async () => {
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .hero-title {
@@ -262,6 +262,22 @@ onMounted(async () => {
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Mobile container for switched components */
+.mobile-container {
+  width: 100%;
+  max-width: 100%;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .window-header {
@@ -295,6 +311,9 @@ onMounted(async () => {
 .code-content {
   padding: 1.5rem;
   position: relative;
+  overflow-x: auto;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .code-content pre {
@@ -302,6 +321,10 @@ onMounted(async () => {
   color: #d4d4d4;
   font-size: 0.9rem;
   line-height: 1.6;
+  white-space: pre;
+  overflow-x: auto;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .code-comment { color: #6a9955; }
@@ -460,40 +483,149 @@ onMounted(async () => {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .hero-content {
+    gap: 3rem;
+  }
+  
+  .code-content {
+    padding: 1.2rem;
+  }
+  
+  .code-content pre {
+    font-size: 0.85rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .hero {
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
   .hero-content {
     grid-template-columns: 1fr;
     gap: 2rem;
     text-align: center;
+    max-width: 100%;
+    padding: 0;
   }
   
   .hero-title {
     font-size: 2.5rem;
+    word-wrap: break-word;
   }
   
   .hero-buttons {
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .code-window {
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+  }
+  
+  .code-content {
+    padding: 1rem;
+    overflow-x: auto;
+  }
+  
+  .code-content pre {
+    font-size: 0.8rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-x: auto;
   }
   
   .projects-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
   
   .stats-container {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
 }
 
 @media (max-width: 480px) {
-  .stats-container {
-    grid-template-columns: 1fr;
+  .hero {
+    min-height: 100vh;
+    padding: 1.5rem 1rem;
+    max-width: 100vw;
+    overflow-x: hidden;
   }
   
-  .hero {
-    padding: 2rem 1rem;
+  .hero-content {
+    gap: 1.5rem;
+    padding: 0 0.5rem;
   }
   
   .hero-title {
+    font-size: 2rem;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  .greeting {
+    font-size: 1.2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.2rem;
+    word-wrap: break-word;
+  }
+  
+  .hero-description {
+    font-size: 1rem;
+    word-wrap: break-word;
+  }
+  
+  .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .code-window {
+    margin: 0;
+    max-width: 100%;
+  }
+  
+  .code-content {
+    padding: 0.75rem;
+    overflow-x: auto;
+  }
+  
+  .code-content pre {
+    font-size: 0.75rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  
+  .mobile-container {
+    height: 400px;
+    padding: 0 0.5rem;
+  }
+  
+  .stats-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+  
+  .stat-item {
+    padding: 1rem;
+    margin: 0;
+  }
+  
+  .stat-number {
     font-size: 2rem;
   }
 }

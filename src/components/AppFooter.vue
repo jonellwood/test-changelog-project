@@ -2,44 +2,35 @@
   <footer class="app-footer">
     <div class="footer-content">
       <div class="footer-section">
-        <h4>Jon Ellwood</h4>
-        <p>Full Stack Developer passionate about creating efficient, elegant solutions and sharing knowledge through open source.</p>
+        <h4>{{ profile.personal.name }}</h4>
+        <p>{{ profile.personal.title }} passionate about creating efficient, elegant solutions and sharing knowledge through open source.</p>
       </div>
       
       <div class="footer-section">
         <h4>Connect</h4>
         <ul>
-          <li><a href="https://github.com/jonellwood" target="_blank">GitHub</a></li>
-          <li><a href="https://www.npmjs.com/~jonellwood" target="_blank">npm</a></li>
-          <li><a href="https://www.linkedin.com/in/jon-ellwood-320199244/" target="_blank">LinkedIn</a></li>
-          <li><a href="mailto:jonellwood@gmail.com">Email</a></li>
+          <li><a :href="profile.social.github.url" target="_blank">{{ profile.social.github.display }}</a></li>
+          <li><a :href="profile.social.npm.url" target="_blank">{{ profile.social.npm.display }}</a></li>
+          <li><a :href="profile.social.linkedin.url" target="_blank">{{ profile.social.linkedin.display }}</a></li>
+          <li><a :href="profile.social.email.url">{{ profile.social.email.display }}</a></li>
         </ul>
       </div>
       
       <div class="footer-section">
         <h4>Built With</h4>
-        <p>Vue 3, Vite & ❤️</p>
-        <p class="build-info">Open source tools for modern development</p>
+        <p>{{ profile.site.builtWith }}</p>
+        <p class="build-info">{{ profile.site.builtWithDescription }}</p>
       </div>
     </div>
     
     <div class="footer-bottom">
-        <p>&copy; 2025 Jon Ellwood. Full Stack Developer. Made with ❤️ and Vue.js</p>
+        <p>&copy; {{ profile.site.year }} {{ profile.personal.name }}. {{ profile.personal.title }}. Made with ❤️ and Vue.js</p>
     </div>
   </footer>
 </template>
 
-<script>
-import packageJson from '../../package.json'
-
-export default {
-  name: 'AppFooter',
-  computed: {
-    version() {
-      return packageJson.version
-    }
-  }
-}
+<script setup>
+import profile from '../data/profile.js'
 </script>
 
 <style scoped>

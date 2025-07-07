@@ -2,8 +2,8 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <RouterLink to="/" class="brand-link">
-        <h1>Jon Ellwood</h1>
-        <span class="tagline">Full Stack Developer</span>
+        <h1>{{ profile.personal.name }}</h1>
+        <span class="tagline">{{ profile.personal.title }}</span>
       </RouterLink>
     </div>
     
@@ -41,8 +41,8 @@
       
       <RouterLink to="/contact" class="navbar-item">Contact</RouterLink>
       
-      <a href="https://github.com/jonellwood" class="navbar-item external" target="_blank">
-        <span>GitHub</span>
+      <a :href="profile.social.github.url" class="navbar-item external" target="_blank">
+        <span>{{ profile.social.github.display }}</span>
         <svg class="external-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
           <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -66,6 +66,7 @@
 import { ref, computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useDarkMode } from '../composables/useDarkMode.js'
+import profile from '../data/profile.js'
 
 const route = useRoute()
 const showDropdown = ref(false)
@@ -86,9 +87,11 @@ const isPackagesRoute = computed(() => {
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  /* Remove sticky positioning to prevent z-index conflicts */
+  position: relative;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .brand-link {
@@ -153,9 +156,12 @@ const isPackagesRoute = computed(() => {
   border-radius: 1px;
 }
 
-/* Dropdown Styles */
+/* Dropdown Styles - Using flexbox positioning instead of absolute */
 .dropdown {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .dropdown-trigger {
@@ -180,12 +186,14 @@ const isPackagesRoute = computed(() => {
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   min-width: 280px;
+  max-width: 90vw;
   opacity: 0;
   visibility: hidden;
   transform: translateX(-50%) translateY(-10px);
   transition: all 0.3s ease;
   margin-top: 0.5rem;
   overflow: hidden;
+  z-index: 50;
 }
 
 .dropdown-menu.show {
@@ -285,6 +293,8 @@ const isPackagesRoute = computed(() => {
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
+    max-width: 100vw;
+    box-sizing: border-box;
   }
   
   .navbar-menu {
@@ -292,6 +302,9 @@ const isPackagesRoute = computed(() => {
     flex-wrap: wrap;
     justify-content: center;
     position: relative;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
   }
   
   .navbar-brand h1 {
@@ -303,16 +316,16 @@ const isPackagesRoute = computed(() => {
   }
   
   .dropdown-menu {
-    position: fixed;
     left: 1rem;
     right: 1rem;
     width: auto;
     min-width: auto;
-    transform: translateY(-10px);
+    max-width: calc(100vw - 2rem);
+    transform: translateX(-50%) translateY(-10px);
   }
   
   .dropdown-menu.show {
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
   }
 }
 </style>

@@ -71,69 +71,9 @@
 
 <script setup>
 import { ref } from 'vue'
+import { getPackages } from '../data/profile.js'
 
-const packages = ref([
-  {
-    name: 'git-changelog-manager',
-    version: '1.1.0',
-    description: 'Automated changelog generation with AI-powered commit message polishing, GitHub integration, and smart release management.',
-    emoji: '📋',
-    downloads: '100+',
-    lastUpdated: '2025-01-04',
-    tech: ['Node.js', 'CLI', 'AI', 'GitHub API'],
-    features: [
-      'Automated commit message extraction',
-      'AI-powered message polishing (OpenAI/Claude)',
-      'Smart pending commits detection',
-      'GitHub releases integration',
-      'Semantic versioning support',
-      'Customizable configuration'
-    ],
-    npm: 'https://www.npmjs.com/package/git-changelog-manager',
-    github: 'https://github.com/jonellwood/git-changelog-manager',
-    docs: null
-  },
-  {
-    name: 'ftp-deploy-manager',
-    version: '1.0.0',
-    description: 'Smart FTP deployment tool with git integration, file filtering, and environment-based configuration.',
-    emoji: '🚀',
-    downloads: '50+',
-    lastUpdated: '2024-12-15',
-    tech: ['PHP', 'FTP', 'Git', 'CLI'],
-    features: [
-      'Git-aware file deployment',
-      'Environment variable configuration',
-      'File filtering (.ftpignore support)',
-      'Dry-run mode for testing',
-      'Selective file deployment',
-      'Legacy hosting compatibility'
-    ],
-    npm: 'https://www.npmjs.com/package/ftp-deploy-manager',
-    github: 'https://github.com/jonellwood/ftp-deploy-manager',
-    docs: null
-  },
-  {
-    name: 'business-fee-calculator',
-    version: '1.0.2',
-    description: 'JavaScript utility library for calculating various business fees, taxes, and costs.',
-    emoji: '💰',
-    downloads: '25+',
-    lastUpdated: '2024-11-20',
-    tech: ['JavaScript', 'Utilities', 'Browser'],
-    features: [
-      'Multiple fee calculation types',
-      'Tax calculation utilities',
-      'Currency formatting helpers',
-      'Zero dependencies',
-      'Browser and Node.js compatible',
-      'TypeScript definitions included'
-    ],
-    npm: 'https://www.npmjs.com/package/business-fee-calculator',
-    github: 'https://github.com/jonellwood/business-fee-calculator-js',
-    docs: null
-  }
-])
+const packages = ref(getPackages())
 
 const copyToClipboard = (packageName) => {
   const text = `npm install ${packageName}`

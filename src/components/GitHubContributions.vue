@@ -74,6 +74,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { fetchContributionsData, calculateContributionStats } from '../utils/github.js'
+import profile from '../data/profile.js'
 
 const loading = ref(true)
 const error = ref(null)
@@ -154,7 +155,7 @@ const fetchContributions = async () => {
     loading.value = true
     
     // Attempt to fetch real data (will fall back to mock data if no token)
-    const contributionCalendar = await fetchContributionsData('jonellwood', import.meta.env.VUE_APP_GITHUB_TOKEN)
+    const contributionCalendar = await fetchContributionsData(profile.github.username, import.meta.env.VUE_APP_GITHUB_TOKEN)
     
     // Process the data for display
     processContributionsData(contributionCalendar)

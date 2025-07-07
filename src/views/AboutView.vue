@@ -5,11 +5,11 @@
         <div class="about-hero">
           <div class="about-text">
             <h1>About Me</h1>
-            <p class="lead">Full Stack Developer with a passion for creating elegant solutions and contributing to the open source community.</p>
+            <p class="lead">{{ profile.personal.title }} with a passion for creating elegant solutions and contributing to the open source community.</p>
           </div>
           <div class="about-avatar">
             <div class="avatar-container">
-              <img src="/jon.png" alt="Jon Ellwood" class="avatar-image" />
+              <img :src="profile.personal.avatar" :alt="profile.personal.name" class="avatar-image" />
             </div>
           </div>
         </div>
@@ -24,44 +24,23 @@
             <div class="story-section">
               <h2>My Journey</h2>
               <p>
-                I'm a Full Stack Developer based in the United States with over 5 years of experience crafting web applications 
-                and developer tools. My journey began with a curiosity for how things work under the hood, which led me to fall 
-                in love with both the creative and logical aspects of programming.
+                {{ profile.personal.aboutMe.intro }}
               </p>
               <p>
-                What drives me most is the intersection of functionality and user experience. Whether I'm building a Vue.js 
-                frontend, architecting a Node.js backend, or creating developer productivity tools, I focus on writing clean, 
-                maintainable code that solves real problems.
+                {{ profile.personal.aboutMe.passion }}
               </p>
               <p>
-                I'm particularly passionate about automation and developer experience. You can see this in my projects like 
-                <strong>git-changelog-manager</strong>, which automates changelog generation with AI assistance, and 
-                <strong>tag-toggle</strong>, a VSCode extension that streamlines HTML editing workflows.
+                {{ profile.personal.aboutMe.automation }}
               </p>
             </div>
 
             <div class="philosophy-section">
               <h2>Development Philosophy</h2>
               <div class="philosophy-grid">
-                <div class="philosophy-item">
-                  <div class="philosophy-icon">🎯</div>
-                  <h3>Purpose-Driven Code</h3>
-                  <p>Every line of code should serve a purpose. I believe in writing clean, readable code that tells a story and solves genuine problems.</p>
-                </div>
-                <div class="philosophy-item">
-                  <div class="philosophy-icon">🔧</div>
-                  <h3>Tool Builder</h3>
-                  <p>I love creating tools that make other developers' lives easier. From CLI utilities to VSCode extensions, I'm always looking for ways to automate repetitive tasks.</p>
-                </div>
-                <div class="philosophy-item">
-                  <div class="philosophy-icon">🌱</div>
-                  <h3>Continuous Learning</h3>
-                  <p>Technology evolves rapidly, and I embrace that change. I'm constantly exploring new frameworks, tools, and methodologies to stay current and improve my craft.</p>
-                </div>
-                <div class="philosophy-item">
-                  <div class="philosophy-icon">🤝</div>
-                  <h3>Open Source First</h3>
-                  <p>I believe in the power of community-driven development. Most of my projects are open source because sharing knowledge makes everyone better.</p>
+                <div class="philosophy-item" v-for="item in profile.philosophy" :key="item.title">
+                  <div class="philosophy-icon">{{ item.icon }}</div>
+                  <h3>{{ item.title }}</h3>
+                  <p>{{ item.description }}</p>
                 </div>
               </div>
             </div>
@@ -69,14 +48,10 @@
             <div class="interests-section">
               <h2>Beyond Code</h2>
               <p>
-                When I'm not coding, you might find me working with wood in my shop. I've been a woodworker for years, 
-                and there's something deeply satisfying about creating something tangible with your hands. The precision 
-                and craftsmanship required in woodworking actually translates well to programming—both require attention 
-                to detail, proper planning, and the right tools for the job.
+                {{ profile.personal.aboutMe.beyondCode }}
               </p>
               <p>
-                I also enjoy contributing to fantasy football analytics (you can see my <strong>draft-app</strong> project), 
-                exploring new technologies, and helping other developers through code reviews and mentoring.
+                {{ profile.personal.aboutMe.interests }}
               </p>
             </div>
           </div>
@@ -85,37 +60,10 @@
           <div class="sidebar">
             <div class="skills-section">
               <h3>Technical Skills</h3>
-              <div class="skills-category">
-                <h4>Frontend</h4>
+              <div class="skills-category" v-for="skillCategory in skillsArray" :key="skillCategory.title">
+                <h4>{{ skillCategory.title }}</h4>
                 <div class="skills-tags">
-                  <span class="skill-tag">Vue.js 3</span>
-                  <span class="skill-tag">JavaScript</span>
-                  <span class="skill-tag">TypeScript</span>
-                  <span class="skill-tag">HTML5</span>
-                  <span class="skill-tag">CSS3</span>
-                  <span class="skill-tag">Responsive Design</span>
-                </div>
-              </div>
-              
-              <div class="skills-category">
-                <h4>Backend</h4>
-                <div class="skills-tags">
-                  <span class="skill-tag">Node.js</span>
-                  <span class="skill-tag">PHP</span>
-                  <span class="skill-tag">Laravel</span>
-                  <span class="skill-tag">APIs</span>
-                  <span class="skill-tag">MySQL</span>
-                </div>
-              </div>
-              
-              <div class="skills-category">
-                <h4>Tools & Platforms</h4>
-                <div class="skills-tags">
-                  <span class="skill-tag">Git</span>
-                  <span class="skill-tag">VSCode</span>
-                  <span class="skill-tag">CLI Development</span>
-                  <span class="skill-tag">FTP/SFTP</span>
-                  <span class="skill-tag">Automation</span>
+                  <span class="skill-tag" v-for="tech in skillCategory.technologies" :key="tech">{{ tech }}</span>
                 </div>
               </div>
             </div>
@@ -123,18 +71,15 @@
             <div class="quick-facts">
               <h3>Quick Facts</h3>
               <ul>
-                <li><strong>🌍 Location:</strong> United States</li>
-                <li><strong>💼 Experience:</strong> 5+ years</li>
-                <li><strong>🎯 Focus:</strong> Full Stack Development</li>
-                <li><strong>📦 npm Packages:</strong> 3 published</li>
-                <li><strong>🏆 GitHub Repos:</strong> 123+ projects</li>
-                <li><strong>🔧 VSCode Extensions:</strong> 1 published</li>
+                <li v-for="fact in profile.quickFacts" :key="fact.label">
+                  <strong>{{ fact.icon }} {{ fact.label }}:</strong> {{ fact.value }}
+                </li>
               </ul>
             </div>
 
             <div class="availability">
               <h3>Availability</h3>
-              <p>I'm currently open to freelance projects and consulting opportunities. If you have an interesting project or need help with web development, feel free to reach out!</p>
+              <p>I'm currently {{ profile.personal.availability.status.toLowerCase() }}. If you have an interesting project or need help with web development, feel free to reach out!</p>
               <RouterLink to="/contact" class="btn btn-primary">Get In Touch</RouterLink>
             </div>
           </div>
@@ -146,6 +91,9 @@
 
 <script setup>
 import { RouterLink } from 'vue-router'
+import profile, { getSkillsArray } from '../data/profile.js'
+
+const skillsArray = getSkillsArray()
 </script>
 
 <style scoped>

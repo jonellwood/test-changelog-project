@@ -14,32 +14,11 @@
           <div class="contact-methods">
             <h2>Ways to Connect</h2>
             <div class="contact-cards">
-              <a href="mailto:jonellwood@gmail.com" class="contact-card email">
-                <div class="contact-icon">📧</div>
-                <h3>Email</h3>
-                <p>jonellwood@gmail.com</p>
-                <span class="contact-label">Best for: Project inquiries, collaborations</span>
-              </a>
-
-              <a href="https://github.com/jonellwood" target="_blank" class="contact-card github">
-                <div class="contact-icon">🐙</div>
-                <h3>GitHub</h3>
-                <p>@jonellwood</p>
-                <span class="contact-label">Best for: Code reviews, open source</span>
-              </a>
-
-              <a href="https://www.linkedin.com/in/jon-ellwood-320199244/" target="_blank" class="contact-card linkedin">
-                <div class="contact-icon">💼</div>
-                <h3>LinkedIn</h3>
-                <p>/in/jon-ellwood-320199244</p>
-                <span class="contact-label">Best for: Professional networking</span>
-              </a>
-
-              <a href="https://bsky.app/profile/jonellwood.dev" target="_blank" class="contact-card bluesky">
-                <div class="contact-icon">🦋</div>
-                <h3>Bluesky</h3>
-                <p>@jonellwood.dev</p>
-                <span class="contact-label">Best for: Quick questions, tech chat</span>
+              <a v-for="contact in contactMethods" :key="contact.display" :href="contact.url" :target="contact.url.startsWith('mailto:') ? '_self' : '_blank'" :class="['contact-card', contact.display.toLowerCase()]">
+                <div class="contact-icon">{{ contact.icon }}</div>
+                <h3>{{ contact.display }}</h3>
+                <p>{{ contact.username }}</p>
+                <span class="contact-label">{{ contact.description }}</span>
               </a>
             </div>
           </div>
@@ -50,38 +29,31 @@
             
             <div class="info-section">
               <h3>🌍 Location</h3>
-              <p>Currently based in the United States</p>
+              <p>Currently based in {{ profile.personal.location }}</p>
             </div>
 
             <div class="info-section">
               <h3>💼 Availability</h3>
-              <p>Open to freelance projects and consulting opportunities</p>
+              <p>{{ profile.personal.availability.status }}</p>
             </div>
 
             <div class="info-section">
               <h3>🕐 Response Time</h3>
-              <p>Usually respond within 24-48 hours</p>
+              <p>{{ profile.personal.availability.responseTime }}</p>
             </div>
 
             <div class="info-section">
               <h3>🚀 Interests</h3>
               <ul>
-                <li>Vue.js & Modern Frontend</li>
-                <li>Node.js & Backend Development</li>
-                <li>Open Source Projects</li>
-                <li>Developer Tools & CLI Apps</li>
-                <li>Automation & Productivity</li>
+                <li v-for="interest in profile.interests" :key="interest">{{ interest }}</li>
               </ul>
             </div>
 
             <div class="info-section">
               <h3>📦 My npm Packages</h3>
               <div class="npm-links">
-                <a href="https://www.npmjs.com/package/git-changelog-manager" target="_blank" class="npm-link">
-                  git-changelog-manager
-                </a>
-                <a href="https://www.npmjs.com/package/ftp-deploy-manager" target="_blank" class="npm-link">
-                  ftp-deploy-manager
+                <a v-for="pkg in profile.npmPackages" :key="pkg.name" :href="pkg.url" target="_blank" class="npm-link">
+                  {{ pkg.name }}
                 </a>
               </div>
             </div>
@@ -92,8 +64,8 @@
         <div class="contact-cta">
           <h2>Let's Build Something Together</h2>
           <p>Whether you have a project in mind, need help with existing code, or just want to chat about tech, I'd love to hear from you!</p>
-          <a href="mailto:jonellwood@gmail.com" class="btn btn-primary">
-            📧 Send Email
+          <a :href="profile.social.email.url" class="btn btn-primary">
+            {{ profile.social.email.icon }} Send Email
           </a>
         </div>
       </div>
@@ -102,7 +74,9 @@
 </template>
 
 <script setup>
-// No reactive data needed for this static contact page
+import profile, { getContactMethods } from '../data/profile.js'
+
+const contactMethods = getContactMethods()
 </script>
 
 <style scoped>
